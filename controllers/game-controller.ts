@@ -37,7 +37,7 @@ export const startGame = async (req: Request, res: Response) => {
         await saveSessionData(sessionId, {messageHist}); //update session history to contain hint
  
         res.cookie('sessionId', sessionId, {httpOnly: true}) //set sessionId in cookies
-        res.status(200).send(hintResp); //send response to START
+        res.send(hintResp); //send response to START
     } catch (error) {
         console.error(error);
         res.status(500).send('Error fetching hint');
@@ -56,9 +56,9 @@ export const playGame = async (req: Request, res: Response) => {
         const sessionId = req.cookies['sessionId']; // retrieve sessionId from incoming cookies
         const userMessage = req.query.message as string; //get the latest message from the user
 
-        //send standard response for empty message
+        // send standard response for empty message
         if(userMessage == ''){
-            res.status(200).send('Oh naiive traveler, you must ask me a question in order to garner a response...')
+            return res.send('Oh naiive traveler, you must ask me a question in order to garner a response...')
         }
 
         let messageHist = await retrieveMessageHist(sessionId); //retrieve session/message history of the user
@@ -72,7 +72,7 @@ export const playGame = async (req: Request, res: Response) => {
         messageHist.push({ role: "system", content: resp }); 
         await saveSessionData(sessionId, {messageHist}); 
         
-        res.status(200).send(resp); //send the response
+        res.send(resp); //send the response
     } catch (error) {
         console.error(error);
         res.status(500).send('Error fetching message response');
@@ -85,5 +85,5 @@ export const playGame = async (req: Request, res: Response) => {
  * @param res  default response to specify misunderstood request params
  */
 export const defaultResponse = (req: Request, res: Response) => {
-    res.status(200).send('Please specify an appropriate response state:\n 1. "Start" - to begin the game with a hint\n 2. "Play"');
+    res.send('Please specify an appropriate response state:\n 1. "Start" - to begin the game with a hint\n 2. "Play"');
 };

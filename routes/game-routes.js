@@ -14,15 +14,5 @@ exports.router.get('/', (req, res) => {
     const respFunc = (0, game_controller_1.inferGame)(req);
     console.log(`RESP FUNCTION: ${respFunc.name}`);
     respFunc(req, res);
-    // const state = req.query['state'] as string;
-    // console.log(`GET request recieved on state ${state}`)
-    // switch(state) {
-    // case 'start':
-    //     return startGame(req, res);
-    // case 'play':
-    //     return playGame(req, res);
-    // default:
-    //     return defaultResponse(req, res);
-    // }
 });
 // Additional routes for POST, PUT, DELETE can be added here

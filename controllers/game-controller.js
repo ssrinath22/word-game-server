@@ -44,7 +44,7 @@ const startGame = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         messageHist.push({ role: "system", content: hintResp }); //add the hint to the message history
         yield (0, session_service_1.saveSessionData)(sessionId, { messageHist }); //update session history to contain hint
         res.cookie('sessionId', sessionId, { httpOnly: true }); //set sessionId in cookies
-        res.status(200).send(hintResp); //send response to START
+        res.send(hintResp); //send response to START
     }
     catch (error) {
         console.error(error);
@@ -61,16 +61,10 @@ exports.startGame = startGame;
 const playGame = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const sessionId = req.cookies['sessionId']; // retrieve sessionId from incoming cookies
-        //Assumed that cookie will be here due to pre-checking
-        // if (!sessionId) { //if request doesn't contain a sessionID
-        //     // console.log("SESSION ID NOT FOUND IN REQUEST, STARTING NEW GAME")
-        //     // return startGame(req, res)
-        //     return res.status(400).send('Session ID is required');
-        // }
         const userMessage = req.query.message; //get the latest message from the user
-        //send standard response for empty message
+        // send standard response for empty message
         if (userMessage == '') {
-            res.status(200).send('Oh naiive traveler, you must ask me a question in order to garner a response...');
+            return res.send('Oh naiive traveler, you must ask me a question in order to garner a response...');
         }
         let messageHist = yield (0, session_service_1.retrieveMessageHist)(sessionId); //retrieve session/message history of the user
         messageHist.push({ role: "user", content: userMessage }); //add latest message to the message history
@@ -79,7 +73,7 @@ const playGame = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         //update session history to contain latest user message + llm response to it
         messageHist.push({ role: "system", content: resp });
         yield (0, session_service_1.saveSessionData)(sessionId, { messageHist });
-        res.status(200).send(resp); //send the response
+        res.send(resp); //send the response
     }
     catch (error) {
         console.error(error);
@@ -93,6 +87,6 @@ exports.playGame = playGame;
  * @param res  default response to specify misunderstood request params
  */
 const defaultResponse = (req, res) => {
-    res.status(200).send('Please specify an appropriate response state:\n 1. "Start" - to begin the game with a hint\n 2. "Play"');
+    res.send('Please specify an appropriate response state:\n 1. "Start" - to begin the game with a hint\n 2. "Play"');
 };
 exports.defaultResponse = defaultResponse;
