@@ -37,10 +37,10 @@ export const startGame = async (req: Request, res: Response) => {
         await saveSessionData(sessionId, {messageHist}); //update session history to contain hint
  
         res.cookie('sessionId', sessionId, {httpOnly: true}) //set sessionId in cookies
-        res.send(hintResp); //send response to START
+        return res.send(hintResp); //send response to START
     } catch (error) {
         console.error(error);
-        res.status(500).send('Error fetching hint');
+        return res.status(500).send('Error fetching hint');
     }
 };
 
@@ -72,10 +72,10 @@ export const playGame = async (req: Request, res: Response) => {
         messageHist.push({ role: "system", content: resp }); 
         await saveSessionData(sessionId, {messageHist}); 
         
-        res.send(resp); //send the response
+        return res.send(resp); //send the response
     } catch (error) {
         console.error(error);
-        res.status(500).send('Error fetching message response');
+        return res.status(500).send('Error fetching message response');
     }
 };
 
@@ -85,5 +85,5 @@ export const playGame = async (req: Request, res: Response) => {
  * @param res  default response to specify misunderstood request params
  */
 export const defaultResponse = (req: Request, res: Response) => {
-    res.send('Please specify an appropriate response state:\n 1. "Start" - to begin the game with a hint\n 2. "Play"');
+    return res.send('Please specify an appropriate response state:\n 1. "Start" - to begin the game with a hint\n 2. "Play"');
 };

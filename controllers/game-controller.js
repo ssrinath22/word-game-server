@@ -44,11 +44,11 @@ const startGame = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         messageHist.push({ role: "system", content: hintResp }); //add the hint to the message history
         yield (0, session_service_1.saveSessionData)(sessionId, { messageHist }); //update session history to contain hint
         res.cookie('sessionId', sessionId, { httpOnly: true }); //set sessionId in cookies
-        res.send(hintResp); //send response to START
+        return res.send(hintResp); //send response to START
     }
     catch (error) {
         console.error(error);
-        res.status(500).send('Error fetching hint');
+        return res.status(500).send('Error fetching hint');
     }
 });
 exports.startGame = startGame;
@@ -73,11 +73,11 @@ const playGame = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         //update session history to contain latest user message + llm response to it
         messageHist.push({ role: "system", content: resp });
         yield (0, session_service_1.saveSessionData)(sessionId, { messageHist });
-        res.send(resp); //send the response
+        return res.send(resp); //send the response
     }
     catch (error) {
         console.error(error);
-        res.status(500).send('Error fetching message response');
+        return res.status(500).send('Error fetching message response');
     }
 });
 exports.playGame = playGame;
@@ -87,6 +87,6 @@ exports.playGame = playGame;
  * @param res  default response to specify misunderstood request params
  */
 const defaultResponse = (req, res) => {
-    res.send('Please specify an appropriate response state:\n 1. "Start" - to begin the game with a hint\n 2. "Play"');
+    return res.send('Please specify an appropriate response state:\n 1. "Start" - to begin the game with a hint\n 2. "Play"');
 };
 exports.defaultResponse = defaultResponse;
