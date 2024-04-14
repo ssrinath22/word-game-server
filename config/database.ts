@@ -28,7 +28,7 @@ import { Pool } from 'pg';
 
 // Create a pool using the connection string from Heroku environment variable
 const pool = new Pool({
-    connectionString: 'postgres://ublvaslob835ut:p6ee9e0c5d5167ebf11843b0e7b7e57856011b5284b79efa8b3bb4846a33a2a90@c7gljno857ucsl.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d3qsesr7bim98v',
+    connectionString: ---,
     ssl: {
         rejectUnauthorized: false // required for Heroku's self-signed certificate
     }
