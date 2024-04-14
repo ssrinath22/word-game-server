@@ -11,6 +11,7 @@ export const router = Router();
  * facilitate the game's initial and continued states as of now
  */
 router.get('/', (req, res) => {
+    // console.log(req)
     const respFunc = inferGame(req)
     console.log(`RESP FUNCTION: ${respFunc.name}`)
     respFunc(req,res)

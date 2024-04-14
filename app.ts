@@ -7,7 +7,7 @@ const app: Express = express();
 const port =  8000; //potentially also use: process.env.PORT - for security
 
 const corsOptions = {
-    origin: 'http://localhost:3001', // Replace with your client's origin
+    origin: 'http://localhost:3000', // Replace with your client's origin
     credentials: true, // This is important to allow cookies to be shared across origins
 };
 

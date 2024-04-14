@@ -37,6 +37,7 @@ export const startGame = async (req: Request, res: Response) => {
         await saveSessionData(sessionId, {messageHist}); //update session history to contain hint
  
         res.cookie('sessionId', sessionId, {httpOnly: true}) //set sessionId in cookies
+        console.log("GAME STARTED for: ", sessionId, " HINT: ", hintResp)
         return res.send(hintResp); //send response to START
     } catch (error) {
         console.error(error);

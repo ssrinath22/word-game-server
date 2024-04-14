@@ -44,6 +44,7 @@ const startGame = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         messageHist.push({ role: "system", content: hintResp }); //add the hint to the message history
         yield (0, session_service_1.saveSessionData)(sessionId, { messageHist }); //update session history to contain hint
         res.cookie('sessionId', sessionId, { httpOnly: true }); //set sessionId in cookies
+        console.log("GAME STARTED for: ", sessionId, " HINT: ", hintResp);
         return res.send(hintResp); //send response to START
     }
     catch (error) {

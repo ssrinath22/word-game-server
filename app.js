@@ -10,7 +10,7 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const app = (0, express_1.default)();
 const port = 8000; //potentially also use: process.env.PORT - for security
 const corsOptions = {
-    origin: 'http://localhost:3001', // Replace with your client's origin
+    origin: 'http://localhost:3000', // Replace with your client's origin
     credentials: true, // This is important to allow cookies to be shared across origins
 };
 app.use((0, cors_1.default)(corsOptions)); //allow all cross-origin requests
